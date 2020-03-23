@@ -1,16 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react"
+import PropTypes from "prop-types"
 import Tooltip, {
-  TooltipChildrenContext,
-} from 'react-native-walkthrough-tooltip';
+  TooltipChildrenContext
+} from "react-native-walkthrough-tooltip"
 
-import { WalkthroughContext } from './ContextWrapper';
+import { WalkthroughContext } from "./ContextWrapper"
 
 const WalkthroughElement = props => {
-  const elementId = props.id;
+  const elementId = props.id
 
   const defaultPlacement =
-    React.Children.count(props.children) === 0 ? 'center' : 'top';
+    React.Children.count(props.children) === 0 ? "center" : "top"
 
   return (
     <WalkthroughContext.Consumer>
@@ -21,19 +21,19 @@ const WalkthroughElement = props => {
           content: props.content || currentElement.content,
           placement: currentElement.placement || defaultPlacement,
           onClose: () => {
-            goToNext();
+            // goToNext();
 
-            if (typeof currentElement.onClose === 'function') {
-              currentElement.onClose();
+            if (typeof currentElement.onClose === "function") {
+              currentElement.onClose()
             }
-          },
-        };
+          }
+        }
 
         const tooltipProps = {
           ...defaultTooltipProps,
           ...currentElement.tooltipProps,
-          ...props.tooltipProps,
-        };
+          ...props.tooltipProps
+        }
 
         return (
           <Tooltip {...tooltipProps}>
@@ -45,24 +45,24 @@ const WalkthroughElement = props => {
               props.children
             )}
           </Tooltip>
-        );
+        )
       }}
     </WalkthroughContext.Consumer>
-  );
-};
+  )
+}
 
 WalkthroughElement.defaultProps = {
   content: null,
   tooltipProps: {},
-  useTooltipChildContext: false,
-};
+  useTooltipChildContext: false
+}
 
 WalkthroughElement.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   content: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
   id: PropTypes.string.isRequired,
   tooltipProps: PropTypes.object,
-  useTooltipChildContext: PropTypes.bool,
-};
+  useTooltipChildContext: PropTypes.bool
+}
 
-export default WalkthroughElement;
+export default WalkthroughElement
